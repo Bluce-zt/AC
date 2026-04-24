@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>冯欣老师课题组招生试题</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">AC</div>
+          <div>
+            <h1>冯欣老师课题组招生试题</h1>
+            <p id="roomMeta">实时题单</p>
+          </div>
+        </div>
+        <div class="session">
+          <label>
+            <span>房间</span>
+            <input id="roomInput" autocomplete="off" />
+          </label>
+          <label>
+            <span>姓名</span>
+            <input id="nameInput" autocomplete="off" />
+          </label>
+          <button id="joinBtn" class="primary">进入</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="problem-pane">
+          <div class="toolbar">
+            <div class="search">
+              <input id="searchInput" placeholder="搜索题号、标题、标签" />
+            </div>
+            <div class="filters" id="filters">
+              <button data-filter="all" class="active">全部</button>
+              <button data-filter="todo">未开始</button>
+              <button data-filter="working">解题中</button>
+              <button data-filter="accepted">AC</button>
+            </div>
+          </div>
+          <div id="problemList" class="problem-list"></div>
+        </aside>
+
+        <section class="detail-pane">
+          <div id="problemDetail" class="problem-detail"></div>
+          <section class="submit-panel">
+            <div class="panel-head">
+              <h2>在线判题</h2>
+              <select id="languageSelect">
+                <option>JavaScript</option>
+                <option>Python</option>
+                <option>C++</option>
+                <option>Java</option>
+              </select>
+            </div>
+            <textarea id="codeInput" class="code-editor" rows="13" spellcheck="false"></textarea>
+            <textarea id="noteInput" rows="4" placeholder="记录思路、复杂度或提交备注"></textarea>
+            <div id="judgeResults" class="judge-results"></div>
+            <div class="actions">
+              <button id="startBtn">开始解题</button>
+              <button id="reviewBtn">待复盘</button>
+              <button id="runBtn" class="success">运行测试并提交</button>
+            </div>
+          </section>
+        </section>
+
+        <aside class="side-pane">
+          <section class="add-panel">
+            <div class="panel-head">
+              <h2>添加题目</h2>
+              <div class="tabs" id="addTabs">
+                <button data-tab="leetcode" class="active">LeetCode</button>
+                <button data-tab="custom">自定义</button>
+              </div>
+            </div>
+
+            <form id="leetcodeForm" class="add-form">
+              <label>
+                <span>题库</span>
+                <select id="catalogSelect"></select>
+              </label>
+              <label>
+                <span>或输入链接</span>
+                <input id="leetcodeUrl" placeholder="https://leetcode.cn/problems/..." />
+              </label>
+              <div class="form-grid">
+                <label>
+                  <span>标题</span>
+                  <input id="leetcodeTitle" placeholder="可留空" />
+                </label>
+                <label>
+                  <span>难度</span>
+                  <select id="leetcodeDifficulty">
+                    <option>Easy</option>
+                    <option selected>Medium</option>
+                    <option>Hard</option>
+                  </select>
+                </label>
+              </div>
+              <label>
+                <span>标签</span>
+                <input id="leetcodeTags" placeholder="动态规划, 图论" />
+              </label>
+              <button class="primary" type="submit">添加到题单</button>
+            </form>
+
+            <form id="customForm" class="add-form hidden">
+              <div class="form-grid">
+                <label>
+                  <span>标题</span>
+                  <input id="customTitle" required />
+                </label>
+                <label>
+                  <span>难度</span>
+                  <select id="customDifficulty">
+                    <option>Easy</option>
+                    <option selected>Medium</option>
+                    <option>Hard</option>
+                  </select>
+                </label>
+              </div>
+              <label>
+                <span>标签</span>
+                <input id="customTags" placeholder="算法, 系统, 数学建模" />
+              </label>
+              <label>
+                <span>题面</span>
+                <textarea id="customStatement" rows="5" required></textarea>
+              </label>
+              <label>
+                <span>样例</span>
+                <textarea id="customExamples" rows="3"></textarea>
+              </label>
+              <label>
+                <span>函数名</span>
+                <input id="customFunctionName" value="solve" required />
+              </label>
+              <label>
+                <span>测试样例 JSON</span>
+                <textarea id="customTestCases" rows="5">[
+  { "input": [1, 2], "expected": 3 }
+]</textarea>
+              </label>
+              <label>
+                <span>隐藏测试 JSON</span>
+                <textarea id="customHiddenTestCases" rows="5">[
+  { "input": [10, 20], "expected": 30 }
+]</textarea>
+              </label>
+              <label>
+                <span>初始代码</span>
+                <textarea id="customStarterCode" class="code-editor small-code" rows="5">function solve(a, b) {
+  // TODO
+}</textarea>
+              </label>
+              <button class="primary" type="submit">发布自定义题</button>
+            </form>
+          </section>
+
+          <section class="rank-panel">
+            <div class="panel-head">
+              <h2>排行榜</h2>
+              <span id="onlineCount" class="live-dot">0 在线</span>
+            </div>
+            <div id="scoreboard" class="scoreboard"></div>
+          </section>
+
+          <section class="activity-panel">
+            <div class="panel-head">
+              <h2>动态</h2>
+            </div>
+            <div id="activity" class="activity"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <template id="emptyTemplate">
+      <div class="empty">
+        <strong>题单为空</strong>
+        <span>从右侧添加 LeetCode 题或自定义题。</span>
+      </div>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
