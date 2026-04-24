@@ -1,0 +1,13 @@
+{
+  "name": "fx-lab-ac-board",
+  "version": "1.0.0",
+  "private": true,
+  "description": "冯欣老师课题组招生试题 - 仿 LeetCode 个人题单与多人实时解题网页",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

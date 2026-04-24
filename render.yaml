@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: fx-lab-ac-board
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: fx-lab-data
+      mountPath: /var/data
+      sizeGB: 1
